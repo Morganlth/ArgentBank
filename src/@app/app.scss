@@ -1,0 +1,187 @@
+/* #||__[main]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __SASS */
+
+    /* __DEPENDENCIES */
+    @use '../lib/scss/utils/font' ;
+    @use '../lib/scss/utils/media';
+
+
+/* #\_VARIABLES_\ */
+
+    /* __THIS */
+
+    /* __INSIDE */
+
+
+/* #\_PLACEHOLDERS_\ */
+
+    /* __RESET */
+    %reset
+    {
+        body, h1, h2, h3, h4, h5, h6, ul, ol, p, figure, blockquote, pre, form, select, option, hr { margin : 0; }
+        ul, ol, button, input, textarea, option                                                    { padding: 0; }
+
+        li:not(.\@default) { list-style: none; }
+
+        a:not(a[draggable]), img { @extend %no_drag; }
+
+        a:not(.\@default) { text-decoration: none; }
+
+        button:not(.\@default), input, textarea, select, iframe { border: none; }
+
+        a, button, textarea, [contenteditable="true"] { outline: none; }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:is(:hover, :focus, :active)
+        {
+            @each $key, $value in $colors_TO_EXPORT
+            {
+                &.b_#{$key} { -webkit-box-shadow: 0 0 0px 1000px $value inset !important; }
+    
+                &.c_#{$key}
+                {
+                    -webkit-text-fill-color: $value !important;
+
+                    caret-color: $value !important;
+                }
+            }
+        }
+
+        hr:not(.\@default)
+        {
+            border-top   : solid 1px;
+            border-right : none;
+            border-bottom: none;
+            border-left  : none;
+        }
+    }
+
+    /* __SET */
+    %set
+    {
+        font-size: 62.5%; // *1.6rem => 16px
+    
+        &, body
+        {
+            scroll-behavior    : smooth;
+            overscroll-behavior: none;
+    
+            user-select: none;
+        }
+
+        #APP
+        {
+            grid-template-columns: auto 1fr;
+            grid-template-rows   : auto 1fr;
+        }
+
+        &:not(&.o_hid) { overflow: hidden overlay !important; }
+
+        &::before
+        {
+            @include constructor(p_fxd, t_0, l_0, z_-3, o_0);
+
+            content: '@AUTHOR: #name: LE THUAUT Morgan #job: web developer #email: morganlethuaut@gmail.com';
+        }
+
+        @include media.media_crushed { --crushed: true; }
+
+        @include media.media_mobile
+        {
+            --mobile: true;
+    
+            // font-size: 46.875%; // *1.6rem => 12px
+        }
+
+        @include media.media_tablet
+        {
+            --tablet: true;
+    
+            // font-size: 54.6875%; // *1.6rem => 14px
+        }
+    
+        @include media.media_desktop
+        {
+            --desktop: true;
+    
+            // font-size: 62.5%; // *1.6rem => 16px
+        }
+
+        button, select { @extend %c_ptr; }
+    }
+
+
+/* #\_VARS_\ */
+
+    /* __ROOT */
+
+
+/* #\_UTILS_\ */
+
+    /* __SUPER_CLASS */
+    .super_btn { @include constructor(b_prm0, brd_c_prm0, c_lgh0); }
+
+    .super_ipt
+    {
+        @include constructor(pt_1, pr_1, pb_1, pl_1, b_lgh0, c_drk0);
+    
+        border: solid 1px #767676;
+    }
+
+    @each $n, $value in $vars_FONTS
+    {
+        .super_txt_#{$n}       { @include font.font_constructor($family: 'Avenir'      , $size: $value); }
+        .super_txt_heavy_#{$n} { @include font.font_constructor($family: 'Avenir-Heavy', $size: $value); }
+    }
+
+    .super_txt_selection { &::selection, & *::selection { @include constructor(b_prm0, c_drk0); } }
+
+    .super_scroll_bar
+    {
+        &::-webkit-scrollbar, &::-webkit-scrollbar-thumb { pointer-events: auto !important; }
+
+        &::-webkit-scrollbar
+        {
+            width : $scrollbar_SIZE;
+            height: $scrollbar_SIZE;
+        }
+
+        &::-webkit-scrollbar-thumb
+        {
+            @include constructor(b_gry0, brd_s_sld);
+        
+            border-width: 3px;
+
+            &:hover { border-width: 1px; }
+        }
+
+        &:not(.\@reverse)
+        {
+            &::-webkit-scrollbar { @extend %b_drk0; }
+
+            &::-webkit-scrollbar-thumb { @extend %brd_c_drk0; }
+        }
+        &.\@reverse
+        {
+            &::-webkit-scrollbar { @extend %b_lgh0; }
+
+            &::-webkit-scrollbar-thumb { @extend %brd_c_lgh0; }
+        }
+    }
+
+    /* __CLASS */
+    @each $name, $property, $value in $placeholders_PLACEHOLDERS { .#{$name} { @extend %#{$name}; } }
+
+
+/* #\_THIS_\ */
+
+html
+{
+    @extend %font_fonts;
+    @extend %reset;
+    @extend %set;
+}

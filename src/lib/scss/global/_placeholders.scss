@@ -1,0 +1,308 @@
+/* #||__[placeholders]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __SASS */
+    @use 'sass:list';
+
+    /* __GLOBAL */
+    @use 'vars'   as *;
+    @use 'colors' as *;
+
+
+/* #\_VARIABLES_\ */
+
+    /* __THIS */
+    $placeholders_AUTOCOMPLETE:
+    (
+        'g_' gap $vars_GAPS
+        ,
+        't_' top    $vars_GAPS,
+        'r_' right  $vars_GAPS,
+        'b_' bottom $vars_GAPS,
+        'l_' left   $vars_GAPS
+        ,
+        'h_' height $vars_GAPS
+        ,
+        'mt_' margin-top    $vars_GAPS,
+        'mr_' margin-right  $vars_GAPS,
+        'mb_' margin-bottom $vars_GAPS,
+        'ml_' margin-left   $vars_GAPS
+        ,
+        'pt_' padding-top    $vars_GAPS,
+        'pr_' padding-right  $vars_GAPS,
+        'pb_' padding-bottom $vars_GAPS,
+        'pl_' padding-left   $vars_GAPS
+        ,
+        'b_' background-color $colors_TO_EXPORT ''
+        ,
+        'brd_w_' border-width $vars_GAPS,
+        'brd_c_' border-color $colors_TO_EXPORT ' !important'
+        ,
+        'c_' color $colors_TO_EXPORT ''
+        ,
+        'lh_' line-height $vars_FONTS
+    );
+    $placeholders_PLACEHOLDERS:
+    (
+        // CONTENT
+        'c_void' content "''",
+    
+        // DISPLAY
+        'd_non' display none,
+        'd_cts' display contents,
+        'd_blc' display block,
+        'd_il_' display inline,
+        'd_ilb' display inline-block,
+        'd_ilf' display inline-flex,
+        'd_grd' display grid,
+        'd_flx' display flex,
+
+        // GRID & FLEX
+        'ga_11' grid-area '1 / 1',
+    
+        'f_1' flex 1,
+
+        'fs_0' flex-shrink 0,
+
+        'f_rwr' flex-direction  row-reverse,
+        'f_cl_' flex-direction  column,
+        'f_clr' flex-direction  column-reverse,
+        'f_wrp' flex-wrap       wrap,
+        'j_ctr' justify-content center,
+        'j_sbt' justify-content space-between,
+        'j_end' justify-content flex-end,
+        'a_ctr' align-items     center,
+        'a_end' align-items     flex-end,
+
+        'g_0'   gap 0,
+        'g_0_5' gap '0 #{$g5}',
+
+        // WILL CHANGE
+        'wc_tfm' will-change transform,
+
+        // ISOLATION
+        'i_isl' isolation isolate,
+
+        // POSITION
+        'p_fxd' position fixed,
+        'p_abs' position absolute,
+        'p_rlt' position relative,
+        'p_stk' position sticky,
+
+        't_0' top    0,
+        'r_0' right  0,
+        'b_0' bottom 0,
+        'l_0' left   0,
+
+        't_50' top    50%,
+        'r_50' right  50%,
+        'b_50' bottom 50%,
+        'l_50' left   50%,
+
+        't_100' top    100%,
+        'r_100' right  100%,
+        'b_100' bottom 100%,
+        'l_100' left   100%,
+
+        'z_-3' z-index -3,
+        'z_-2' z-index -2,
+        'z_-1' z-index -1,
+        'z_0'  z-index  0,
+        'z_1'  z-index  1,
+        'z_2'  z-index  2,
+        'z_3'  z-index  3,
+        'z_4'  z-index  4,
+        'z_5'  z-index  5,
+
+        // TRANSFORM
+        't_p3d' transform-style preserve-3d,
+
+        't_x50' transform translate3d(50%, 0  , 0),
+        't_y50' transform translate3d(0  , 50%, 0),
+
+        't_x100' transform translate3d(100%, 0   , 0),
+        't_y100' transform translate3d(0   , 100%, 0),
+
+        't_-50'  transform translate3d(-50%, -50%, 0),
+        't_x-50' transform translate3d(-50%, 0   , 0),
+        't_y-50' transform translate3d(0   , -50%, 0),
+
+        't_-100'  transform translate3d(-100%, -100%, 0),
+        't_x-100' transform translate3d(-100%, 0    , 0),
+        't_y-100' transform translate3d(0    , -100%, 0),
+
+        't_r90'  transform rotate3d(0, 0, 1,  90deg),
+        't_r-90' transform rotate3d(0, 0, 1, -90deg),
+        't_r180' transform rotate3d(0, 0, 1, 180deg),
+
+        't_sc1' transform scale(1),
+
+        // OVERFLOW
+        'o_aut' overflow auto,
+        'o_hid' overflow hidden,
+        'o_h_a' overflow 'hidden auto',
+
+        // BACKFACE VISIBILITY
+        'bv_hid' backface-visibility hidden,
+
+        // WIDTH
+        'w_0'   width 0,
+        'w_ful' width 100vw,
+        'w_any' width 100%,
+        'w_fit' width fit-content,
+        
+        'min_w_ful' min-width 100vw,
+        'min_w_any' min-width 100%,
+        'max_w_ful' max-width 100vw,
+        'max_w_any' max-width 100%,
+
+        // HEIGHT
+        'h_0'   height 0,
+        'h_ful' height 100vh,
+        'h_lvh' height 100lvh,
+        'h_svh' height 100svh,
+        'h_dvh' height 100dvh,
+        'h_any' height 100%,
+        'h_fit' height fit-content,
+
+        'min_h_ful' min-height 100vh,
+        'min_h_any' min-height 100%,
+        'max_h_ful' max-height 100vh,
+        'max_h_any' max-height 100%,
+
+        // MARGIN
+        'm__aut' margin-inline auto,
+
+        'mt_0' margin-top    0,
+        'mr_0' margin-right  0,
+        'mb_0' margin-bottom 0,
+        'ml_0' margin-left   0,
+
+        // PADDING
+        'pt_0' padding-top    0,
+        'pr_0' padding-right  0,
+        'pb_0' padding-bottom 0,
+        'pl_0' padding-left   0,
+
+        // VISIBILITY
+        'v_hid' visibility hidden,
+
+        // OPACITY
+        'o_0'   opacity 0,
+        'o_50'  opacity .5,
+        'o_100' opacity 1,
+
+        // BOX
+        'b_brd' box-sizing border-box,
+        'b_ctn' box-sizing content-box,
+
+        // POINTER EVENTS
+        'p_aut' pointer-events auto,
+        'p_non' pointer-events none,
+
+        // OBJECT
+        'op_c' object-position center,
+    
+        'of_c' object-fit cover,
+
+        // BACKGROUND
+        'b_trp' background-color transparent,
+        'b_hrt' background-color inherit,
+
+        // BLEND MODE
+        'bm_dif' mix-blend-mode difference,
+
+        // BORDER
+        'brd_s_sld' border-style solid,
+        'brd_s_dsd' border-style dashed,
+        'brd_s_dtd' border-style dotted,
+        'brd_s_dbl' border-style double,
+
+        'brd_w_0' border-width 0,
+
+        'brd_c_trp' border-color 'transparent !important',
+        'brd_c_hrt' border-color 'inherit     !important',
+
+        'brd_r_0'  border-radius 0,
+        'brd_r_1'  border-radius 5px,
+        'brd_r_2'  border-radius 6px,
+        'brd_r_50' border-radius 50%,
+
+        // TEXT
+        'c_trp' color transparent,
+        'c_hrt' color inherit,
+
+        'f_hrt' font inherit,
+
+        'fw_lgh' font-weight lighter,
+        'fw_nml' font-weight normal,
+        'fw_bld' font-weight bolder,
+        'fw_100' font-weight 100,
+        'fw_200' font-weight 200,
+        'fw_300' font-weight 300,
+        'fw_400' font-weight 400,
+        'fw_500' font-weight 500,
+        'fw_600' font-weight 600,
+        'fw_700' font-weight 700,
+        'fw_800' font-weight 800,
+        'fw_900' font-weight 900,
+
+        'w_brk' word-break break-word,
+
+        't_ctr' text-align center,
+        't_rgt' text-align right,
+        't_lft' text-align left,
+        't_jtf' text-align justify,
+        't_hrt' text-align inherit,
+
+        'to_elp' text-overflow ellipsis,
+
+        'tdl_udl' text-decoration-line underline,
+
+        'lh_1' line-height '1 !important',
+
+        'ws_nowrp' white-space nowrap,
+        'ws_prwrp' white-space pre-wrap,
+
+        'wm_vtl' writing-mode vertical-lr,
+
+        'u_txt' user-select text,
+
+        // POINTER
+        'c_ptr' cursor pointer,
+        'c_grb' cursor grab,
+        'c_gbg' cursor grabbing,
+        'c_txt' cursor text
+    );
+
+    @each $prefix, $property, $list, $indicator in $placeholders_AUTOCOMPLETE // *automatically adds all variants for a group of variables
+    {
+        @each $name, $value in $list
+        {
+            $placeholders_PLACEHOLDERS: list.append($placeholders_PLACEHOLDERS,
+                $prefix + $name
+                $property
+                $value + $indicator
+            );
+        }
+    }
+
+
+/* #\_MIXINS_\ */
+
+    /* __UTILS */
+    @mixin constructor($args...) { @each $p in $args { @extend %#{$p}; } } // *placeholder arguments
+
+
+/* #\_PLACEHOLDERS_\ */
+
+    /* __UTILS */
+    @each $name, $property, $value in $placeholders_PLACEHOLDERS { %#{$name} { #{$property}: #{$value}; } }
+
+    %no_drag
+    {
+        -webkit-user-drag : none;
+        -webkit-app-region: no-drag;
+    }

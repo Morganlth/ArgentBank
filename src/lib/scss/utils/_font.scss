@@ -1,0 +1,164 @@
+/* #||__[font]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __SASS */
+    @use 'sass:string';
+    @use 'sass:list';
+    @use 'sass:map';
+
+
+/* #\_VARIABLES_\ */
+
+    /* __THIS */
+    $font_FACES:
+    (
+        // *Include "font_face" here (family: string, paths: string|list, weight: null|number, style: null|string, title: null|bool).
+        'Avenir'       '/fonts/Avenir/AvenirLTStd-Roman.otf' 400 null null,
+        'Avenir-Heavy' '/fonts/Avenir/AvenirLTStd-Heavy.otf' 700 null null
+    );
+    $font_FAMILIES   : ();
+    $font_TLT_DEFAULT: Helvetica, Arial, 'sans-serif';
+    $font_TXT_DEFAULT: $font_TLT_DEFAULT;
+
+
+/* #\_FUNCTIONS_\ */
+
+    /* __GET */
+    @function font_getSplitPath($path)
+    {
+        $l: string.length($path);
+        $i: $l;
+
+        $extension: false;
+        $name     : false;
+        $src      : false;
+
+        @while $i > 0
+        {
+            $char: string.slice($path, $i, $i);
+
+            @if $extension
+            {
+                @if $char == '/'
+                {
+                    $name: string.slice($path, $i + 1, $l - string.length($extension) - 1);
+                    $src : string.slice($path, 0, $i);
+
+                    $i: 0;
+                }
+            }
+            @else if $char == '.' { $extension: string.slice($path, $i + 1); }
+    
+            $i: $i - 1;
+        }
+
+        @return (src: $src, name: $name, extension: $extension);
+    }
+
+    @function font_getFileFormat($extension)
+    {
+        $format: map.get((otf: 'opentype', ttf: 'truetype', eot: 'embedded-opentype', woff: 'woff', woff2: 'woff2'), $extension);
+
+        @if $format == null { @debug 'Invalid extension "#{$extension}"'; }
+
+        @return $format;
+    }
+
+
+/* #\_MIXINS_\ */
+
+    /* __UTILS */
+    @mixin font_face($family, $paths: false, $weight: false, $style: false, $title: false)
+    {
+        @if $paths
+        {
+            $pathsChecker: ();
+            $namesChecker: ();
+
+            $locals: ();
+            $urls  : ();
+
+            @each $path in $paths
+            {
+                @if (not list.index($pathsChecker, $path))
+                {
+                    $splitPath: font_getSplitPath($path);
+                    $name     : map.get($splitPath, 'name');
+                    $extension: map.get($splitPath, 'extension');
+
+                    @if ($name and $extension)
+                    {
+                        $format      : font_getFileFormat($extension);
+                        $urls        : list.append($urls, url($path) format($format), comma);
+                        $pathsChecker: list.append($pathsChecker, $path);
+
+                        @if (not list.index($namesChecker, $name))
+                        {
+                            $locals      : list.append($locals, local($name), space);
+                            $namesChecker: list.append($namesChecker, $name);
+                        }
+                    }
+                    @else { @debug 'Wrong path "#{path}".'; }
+                }
+                @else { @debug 'Duplicate path "#{$path}".'; }
+            }
+
+            @font-face
+            {
+                font-family : $family;
+                src         : list.join($locals, $urls, comma);
+                font-display: swap;
+
+                @if $weight { font-weight: $weight; }
+                @if $style  { font-style : $style ; }
+            }
+        }
+
+        $font_FAMILIES: map.set($font_FAMILIES, $family, $title) !global;
+    }
+
+    @mixin font_constructor($color: false, $family: false, $size: false, $weight: false, $style: false, $space: false, $height: false)
+    {
+        @extend %font_settings;
+
+        @if map.has-key($font_FAMILIES, $family)
+        {
+            $title: map.get($font_FAMILIES, $family);
+
+            @if   $title { font-family: $family, $font_TLT_DEFAULT; }
+            @else        { font-family: $family, $font_TXT_DEFAULT; }
+        }
+        @else if $family == 'default-tlt' { font-family: $font_TLT_DEFAULT; }
+        @else if $family == 'default-txt' { font-family: $font_TXT_DEFAULT; }
+
+        @if $color  { color         : $color ; }
+        @if $size   { font-size     : $size  ; }
+        @if $weight { font-weight   : $weight; }
+        @if $style  { font-style    : $style ; }
+        @if $space  { letter-spacing: $space ; }
+        @if $height { line-height   : $height; }
+    }
+
+    @mixin font_strokeShadow($c: inherit, $s: 1px) { text-shadow: $s $s $c, $s*-1 $s $c, $s*-1 $s*-1 $c, $s $s*-1 $c; }
+
+
+/* #\_PLACEHOLDERS_\ */
+
+    /* __UTILS */
+    %font_settings
+    {
+        font-stretch           : 100%;
+        text-indent            : 0;
+        font-variant           : normal;
+        font-kerning           : normal;
+        font-feature-settings  : normal;
+        font-variation-settings: normal;
+        -webkit-font-smoothing : antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-optical-sizing    : auto;
+        text-rendering         : geometricPrecision;
+    }
+
+    %font_fonts { @each $family, $paths, $weight, $style, $title in $font_FACES { @include font_face($family, $paths, $weight, $style, $title); } }

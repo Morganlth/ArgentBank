@@ -1,0 +1,122 @@
+/* #||__[media]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __SASS */
+    @use "sass:meta";
+    @use 'sass:string';
+    @use 'sass:list';
+
+    /* __GLOBAL */
+    @use '../global/breakpoints' as *;
+
+
+/* #\_VARIABLES_\ */
+
+    /* __THIS */
+    $media_BREAKPOINT_WIDTH_1: $bp4;
+    $media_BREAKPOINT_WIDTH_2: $bp6;
+    $media_BREAKPOINT_HEIGHT : $bp3;
+
+
+/* #\_FUNCTIONS_\ */
+
+    /* __GET */
+    @function media_getMedia($property, $value, $or)
+    {
+        $media: '';
+    
+        @if   meta.type-of($value) == list { $media: media_getRangeOfRules($property, $value, $or); }
+        @else                              { $media: media_getRule($property, $value)             ; }
+
+        @return $media;
+    }
+
+    @function media_getRule($property, $value)
+    {
+        @if string.slice($property, 1, 3) == max and meta.type-of($value) == number { $value: $value - 1; }
+
+        @return '(#{$property}: #{$value})';
+    }
+
+    @function media_getRangeOfRules($property, $list, $or)
+    {
+        $media : null;
+        $prefix: min;
+    
+        @for $i from 1 through 2
+        {
+            $media: '#{media_getSeparationOfRules($media, $or)} #{media_getRule('#{$prefix}-#{$property}', list.nth($list, $i))}';
+
+            @if $i == 1 { $prefix: max; }
+        }
+
+        @return $media; // *ex: min-width: 768px, screen and max-width: 1440px (params: width, (768px, 1440px), true)
+    }
+
+    @function media_getSeparationOfRules($media, $or)
+    {
+        @if $media
+        {
+            @if $or { $media: '#{$media}, screen'; }
+
+            @return '#{$media} and';
+        }
+        
+        @return ''
+    }
+
+
+/* #\_MIXINS_\ */
+
+    /* __UTILS */
+    @mixin media_constructor($values: (), $or: false)
+    {
+        $media: null;
+
+        @each $property, $value in $values { $media: '#{media_getSeparationOfRules($media, $or)} #{media_getMedia($property, $value, $or)}'; }
+
+        @media screen and #{$media} { @content; }
+    }
+
+    @mixin media_crushed($not: false)
+    {
+        $prop: max-height;
+
+        @if $not { $prop: min-height; }
+    
+        @include media_constructor(($prop: $media_BREAKPOINT_HEIGHT), $not) { @content; }
+    }
+
+    @mixin media_mobile($not: false)
+    {
+        $prefix: max;
+
+        @if $not { $prefix: min; }
+    
+        @include media_constructor(('#{$prefix}-width': $media_BREAKPOINT_WIDTH_1, '#{$prefix}-height': $media_BREAKPOINT_HEIGHT), not $not) { @content; }
+    }
+
+    @mixin media_tablet($not: false)
+    {
+        $prop1_VALUE: ($media_BREAKPOINT_WIDTH_1, $media_BREAKPOINT_WIDTH_2);
+        $prop2      : min-height                                            ;
+
+        @if $not
+        {
+            $prop1_VALUE: ($media_BREAKPOINT_WIDTH_2, $media_BREAKPOINT_WIDTH_1);
+            $prop2      : max-height                                            ;
+        }
+    
+        @include media_constructor((width: ($prop1_VALUE), $prop2: $media_BREAKPOINT_HEIGHT), $not) { @content; }
+    }
+
+    @mixin media_desktop($not: false)
+    {
+        $prefix: min;
+
+        @if $not { $prefix: max; }
+    
+        @include media_constructor(('#{$prefix}-width': $media_BREAKPOINT_WIDTH_2, '#{$prefix}-height': $media_BREAKPOINT_HEIGHT), $not) { @content; }
+    }

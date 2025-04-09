@@ -1,0 +1,112 @@
+.loader
+{
+    $s: 8.0rem;
+
+    width : $s;
+    height: $s;
+    
+    &:global(>div)
+    {
+        transform-origin: $s*.5 $s*.5;
+
+        animation: aLoader 1.2s cubic-bezier(.5, 0, .5, 1) infinite;
+
+        @keyframes aLoader { to { transform: rotate(360deg); } }
+
+        &:nth-child(1)
+        {
+            animation-delay: -.036s;
+
+            &:after
+            {
+                $p: 6.262742rem;
+        
+                top : $p;
+                left: $p;
+            }
+        }
+        &:nth-child(2)
+        {
+            animation-delay: -.072s;
+
+            &:after
+            {
+                top : 6.771281rem;
+                left: 5.6rem;
+            }
+        }
+        &:nth-child(3)
+        {
+            animation-delay: -.108s;
+
+            &:after
+            {
+                top : 7.090963rem;
+                left: 4.828221rem;
+            }
+        }
+        &:nth-child(4)
+        {
+            animation-delay: -.144s;
+
+            &:after
+            {
+                top : 7.2rem;
+                left: 4.0rem;
+            }
+        }
+        &:nth-child(5)
+        {
+            animation-delay: -.18s;
+
+            &:after
+            {
+                top : 7.090963rem;
+                left: 3.171779rem;
+            }
+        }
+        &:nth-child(6)
+        {
+            animation-delay: -.216s;
+
+            &:after
+            {
+                top : 6.771281rem;
+                left: 2.4rem;
+            }
+        }
+        &:nth-child(7)
+        {
+            animation-delay: -.252s;
+
+            &:after
+            {
+                top : 6.262742rem;
+                left: 1.737258rem;
+            }
+        }
+        &:nth-child(8)
+        {
+            animation-delay: -.288s;
+
+            &:after
+            {
+                top : 5.6rem;
+                left: 1.228719rem;
+            }
+        }
+
+        &:after
+        {
+            $s: .72rem;
+            $m: $s*-.5;
+    
+            @include constructor(c_void, p_abs, b_prm0, brd_r_50);
+
+            width : $s;
+            height: $s;
+
+            margin: $m 0 0 $m;
+        }
+    }
+}

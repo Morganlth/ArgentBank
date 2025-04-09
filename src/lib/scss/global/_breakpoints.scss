@@ -1,0 +1,23 @@
+/* #||__[breakpoints]__|| */
+
+
+/* #\_VARIABLES_\ */
+
+    /* __OUTSIDE */
+    $bp1: 320px;
+    $bp2: 375px;
+    $bp3: 435px;
+    $bp4: 768px;
+    $bp5: 1024px;
+    $bp6: 1440px;
+
+    /* __THIS */
+    $breakpoints_TO_EXPORT:
+    (
+        $bp1,
+        $bp2,
+        $bp3,
+        $bp4,
+        $bp5,
+        $bp6
+    );

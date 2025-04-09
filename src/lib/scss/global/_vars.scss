@@ -1,0 +1,84 @@
+/* #||__[vars]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __SASS */
+    @use 'sass:list';
+
+
+/* #\_FUNCTIONS_\ */
+
+    /* __UTILS */
+    @function vars_toExport($toExport: (), $map: (), $prefix: '')
+    {
+        @each $n, $value in $map { $toExport: list.append($toExport, $prefix + $n $value) }
+
+        @return $toExport;
+    }
+
+
+/* #\_VARIABLES_\ */
+
+    /* __OUTSIDE */
+    $g0 :  .4rem;
+    $g1 :  .5rem;
+    $g2 :  .8rem;
+    $g3 :   1rem;
+    $g4 : 1.6rem;
+    $g5 :   2rem;
+    $g6 : 2.4rem;
+    $g7 : 3.2rem;
+    $g8 : 4.0rem;
+    $g9 : 4.8rem;
+    $g10:   5rem;
+    $g11: 8.2rem;
+
+    $f0: 1.44rem;
+    $f1:  1.6rem;
+    $f2: 1.76rem;
+    $f3: 1.92rem;
+    $f4:    2rem;
+    $f5:  2.4rem;
+    $f6:  3.2rem;
+    $f7:    4rem;
+    $f8:    8rem;
+
+    $scrollbar_SIZE: 9px;
+
+    /* __THIS */
+    $vars_GAPS:
+    (
+        0  $g0,
+        1  $g1,
+        2  $g2,
+        3  $g3,
+        4  $g4,
+        5  $g5,
+        6  $g6,
+        7  $g7,
+        8  $g8,
+        9  $g9,
+        10 $g10,
+        11 $g11
+    );
+    $vars_FONTS:
+    (
+        0 $f0,
+        1 $f1,
+        2 $f2,
+        3 $f3,
+        4 $f4,
+        5 $f5,
+        6 $f6,
+        7 $f7,
+        8 $f8
+    );
+    $vars_TO_EXPORT: vars_toExport(vars_toExport(
+            (
+                scrollbarSize $scrollbar_SIZE,
+            ),
+            $vars_GAPS, 'g'
+        ),
+        $vars_FONTS, 'f'
+    );

@@ -1,0 +1,19 @@
+@use '../../../lib/scss/utils/media';
+
+.banner
+{
+    height: 40rem;
+
+    background: url('/images/bank-tree.jpeg') 0% 33% / cover no-repeat;
+
+    &>section { width: 30rem; }
+
+    @include media.media_mobile()
+    {
+        height: 30rem;
+
+        background-position: 0 -5rem;
+
+        &>section { width: 20rem; }
+    }
+}

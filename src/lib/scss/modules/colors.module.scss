@@ -1,0 +1,13 @@
+/* #||__[colors.module]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __GLOBAL */
+    @use '../global/colors';
+
+
+/* #\_EXPORTS_\ */
+
+    /* __THIS */
+    :export { @each $n, $c in colors.$colors_TO_EXPORT { #{$n}: $c; } }

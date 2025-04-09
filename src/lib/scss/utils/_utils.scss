@@ -1,0 +1,83 @@
+/* #||__[utils]__|| */
+
+
+/* #\_IMPORTS_\ */
+
+    /* __SASS */
+    @use 'sass:math';
+    @use 'sass:list';
+
+    /* __GLOBAL */
+
+    /* __DEPENDENCIES */
+
+
+/* #\_VARIABLES_\ */
+
+    /* __OUTSIDE */
+
+    /* __THIS */
+
+    /* __INSIDE */
+
+
+/* #\_FUNCTIONS_\ */
+
+    /* __GET */
+
+    /* __UTILS */
+    @function utils_stripUnits($n) { @return math.div($n, ($n * 0 + 1)); }
+
+
+/* #\_MIXINS_\ */
+
+    /* __UTILS */
+    @mixin utils_grid($c: false, $r: false, $g: false)
+    {
+        $gx: 0%;
+        $gy: 0%;
+
+        @if $g
+        {
+            @if type-of($g) == list
+            {
+                $gx: list.nth($g, 1);
+                $gy: list.nth($g, 2);
+
+                gap: $gy $gx;
+            }
+            @else
+            {
+                $gx: $g;
+                $gy: $g;
+
+                gap: $g;
+            }
+        }
+
+        @if $c
+        {
+            @if   type-of($c) == number { grid-template-columns: repeat($c, calc((100% - $gx * ($c - 1)) / $c)); }
+            @else                       { grid-template-columns: $c;                                             }
+        }
+        @if $r
+        {
+            @if   type-of($r) == number { grid-template-rows: repeat($r, calc((100% - $gy * ($r - 1)) / $r)); }
+            @else                       { grid-template-rows: $r;                                             }
+        }
+    }
+
+    @mixin utils_placement($c: false, $p: false, $t: false, $r: false, $b: false, $l: false, $z: false, $x: false, $y: false)
+    {
+        @if $c { content : $c; }
+        @if $p { position: $p; }
+        @if $t { top     : $t; }
+        @if $r { right   : $r; }
+        @if $b { bottom  : $b; }
+        @if $l { left    : $l; }
+        @if $z { z-index : $z; }
+
+        @if      $x and $y { transform: translate ($x, $y); }
+        @else if $x        { transform: translateX($x    ); }
+        @else if        $y { transform: translateY(    $y); }
+    }
